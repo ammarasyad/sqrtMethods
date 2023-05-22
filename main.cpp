@@ -3,7 +3,7 @@
 
 import sqrtmath;
 
-double run_with_timer(Math::Types type, double x, int maxIterations) {
+double run_with_timer(const Math::Types& type, double x, int maxIterations) {
     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < maxIterations; ++i) {
         Math::sqrt(type, x);
@@ -15,9 +15,35 @@ double run_with_timer(Math::Types type, double x, int maxIterations) {
     return elapsed.count();
 }
 
+bool check_input(const std::string& input) {
+    try {
+        std::stod(input);
+        return true;
+    } catch (const std::invalid_argument& e) {
+        std::cout << "Invalid input\n";
+        return false;
+    }
+}
+
 int main() {
     int maxIterations{ 1000000 };
-    double x{ 12837.3284290217631 };
+//    double x{ 12837.3284290217631 }; For makalah purposes only
+
+    // I need a more robust input validation for real
+    double x;
+    do {
+        std::string input;
+        std::cout << "Enter a valid number: ";
+        std::getline(std::cin >> std::ws, input);
+        std::istringstream iss(input);
+        iss >> x;
+
+        if (!iss.fail()) {
+            break;
+        }
+
+        std::cout << "Invalid input\n";
+    } while (true);
 
     double control = Math::sqrt(Math::Types::NATIVE, x);
 

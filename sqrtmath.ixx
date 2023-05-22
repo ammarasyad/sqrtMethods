@@ -71,7 +71,7 @@ extern "C" double asmSqrt(double);
 export namespace Math {
     enum class Types { NATIVE, BRUTEFORCE, BABYLONIAN, BISECTION, ASM };
 
-    inline const char* EnumToString(Types type) {
+    inline const char* EnumToString(const Types& type) {
         switch (type) {
             case Types::NATIVE:
                 return "NATIVE";
@@ -87,7 +87,7 @@ export namespace Math {
         return "Unknown";
     }
 
-    double sqrt(Types type, double x) {
+    double sqrt(const Types& type, double x) {
         if (x < 0) {
             throw std::domain_error{ "Negative argument for sqrt is unsupported" };
         }
